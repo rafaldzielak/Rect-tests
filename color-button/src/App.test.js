@@ -8,7 +8,7 @@ test("button has correct initial color and turns blue when clicked", () => {
   expect(colorButton).toHaveStyle({ backgroundColor: "MediumVioletRed" });
   fireEvent.click(colorButton);
   expect(colorButton).toHaveStyle({ backgroundColor: "MinightBlue" });
-  expect(colorButton.textContent).toBe("Change to MediumVioletRed");
+  expect(colorButton).toHaveTextContent("Change to MediumVioletRed");
 });
 
 test("initial conditions", () => {
