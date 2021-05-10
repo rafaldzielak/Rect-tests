@@ -4,9 +4,11 @@ import axios from "axios";
 import { Row } from "react-bootstrap";
 import Toppings from "./Toppings";
 import Scoop from "./Scoop";
+import AlertBanner from "../common/AlertBanner";
 
 const Options = ({ optionType }) => {
   const [items, setItems] = useState([]);
+  const [error, setError] = useState(false);
 
   const ItemComponent = optionType === "scoops" ? Scoop : Toppings;
 
@@ -14,10 +16,10 @@ const Options = ({ optionType }) => {
     axios
       .get(`http://localhost:3030/${optionType}`)
       .then((res) => setItems(res.data))
-      .catch((err) => {
-        // TODO: handle error response
-      });
+      .catch((err) => setError(true));
   }, [optionType]);
+
+  if (error) return <AlertBanner />;
   return (
     <Row>
       {items.map((item) => (
