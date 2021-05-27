@@ -15,9 +15,7 @@ const OrderDetails = createContext();
 export const useOrderDetails = () => {
   const context = useContext(OrderDetails);
 
-  if (!context) {
-    throw new Error("useOrderDetails must be used within an OrderDetailsProvider");
-  }
+  if (!context) throw new Error("useOrderDetails must be used within an OrderDetailsProvider");
 
   return context;
 };
