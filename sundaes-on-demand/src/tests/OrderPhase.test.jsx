@@ -33,11 +33,9 @@ test("order phases for happy path", async () => {
   const confirmOrderBtn = screen.getByRole("button", { name: /confirm order/i });
   userEvent.click(confirmOrderBtn);
 
-  const thankYouHeader = await screen.findBuRole("heading", { name: /thank you/i });
+  const thankYouHeader = await screen.findByRole("heading", { name: /thank you/i });
   expect(thankYouHeader).toBeInTheDocument();
 
-  const orderNumber = await screen.findByText(/order number/i);
-  expect(orderNumber).toBeInTheDocument();
   const newOrderBtn = screen.getByRole("button", { name: /new order/i });
   userEvent.click(newOrderBtn);
 

@@ -5,13 +5,13 @@ import userEvent from "@testing-library/user-event";
 
 test("button is disabled on page load", () => {
   render(<SummaryForm />);
-  const colorButton = screen.getByRole("button", { name: "BTN" });
+  const colorButton = screen.getByRole("button", { name: "Confirm Order" });
   expect(colorButton).toBeDisabled();
 });
 
 test("Box enables on first click and disables on second", () => {
   render(<SummaryForm />);
-  const colorButton = screen.getByRole("button", { name: "BTN" });
+  const colorButton = screen.getByRole("button", { name: "Confirm Order" });
   const checkbox = screen.getByRole("checkbox", { name: /I agree the Terms and Conditions/i });
   expect(colorButton).toBeDisabled();
   userEvent.click(checkbox);

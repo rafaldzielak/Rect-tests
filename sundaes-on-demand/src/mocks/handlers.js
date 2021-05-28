@@ -17,5 +17,5 @@ export const handlers = [
       ])
     );
   }),
-  rest.post("http://localhost:3030/toppings", (req, res, ctx) => res(ctx.json([]))),
+  rest.post("http://localhost:3030/order", (req, res, ctx) => res(ctx.json({ orderNumber: 12321 }))),
 ];
