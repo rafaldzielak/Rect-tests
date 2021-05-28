@@ -17,4 +17,5 @@ export const handlers = [
       ])
     );
   }),
+  rest.post("http://localhost:3030/toppings", (req, res, ctx) => res(ctx.json([]))),
 ];
