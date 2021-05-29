@@ -5,8 +5,11 @@ import App from "../App";
 test("order phases for happy path", async () => {
   render(<App />);
 
-  await selectScoopsAndToppings();
+  await selectScoops();
+  await selectToppings();
+  orderSundae();
   checkOrderSummaryPageForScoops();
+  screen.getByText("Gummi bears");
   selectTermsAndConfrimOrder();
   await checkFinalPageAndStartNewOrder();
 
@@ -15,6 +18,14 @@ test("order phases for happy path", async () => {
   // To avoid error messages
   await screen.findByRole("spinbutton", { name: "Vanilla" });
   await screen.findByRole("checkbox", { name: "Gummi bears" });
+});
+
+test("Does not show toppings when no toppings chosen", async () => {
+  render(<App />);
+  await selectScoops();
+  orderSundae();
+  checkOrderSummaryPageForScoops();
+  screen.getByText("No toppings chosen.");
 });
 
 const checkStartPage = () => {
@@ -33,7 +44,7 @@ const checkFinalPageAndStartNewOrder = async () => {
   userEvent.click(newOrderBtn);
 };
 
-const selectScoopsAndToppings = async () => {
+const selectScoops = async () => {
   const vanillaInput = await screen.findByRole("spinbutton", { name: "Vanilla" });
   userEvent.clear(vanillaInput);
   userEvent.type(vanillaInput, "1");
@@ -41,10 +52,14 @@ const selectScoopsAndToppings = async () => {
   const chocolateInput = await screen.findByRole("spinbutton", { name: "Chocolate" });
   userEvent.clear(chocolateInput);
   userEvent.type(chocolateInput, "2");
+};
 
+const selectToppings = async () => {
   const gummiCheckbox = await screen.findByRole("checkbox", { name: "Gummi bears" });
   userEvent.click(gummiCheckbox);
+};
 
+const orderSundae = () => {
   const orderSummaryBtn = screen.getByRole("button", { name: /order sundae/i });
   userEvent.click(orderSummaryBtn);
 };
@@ -57,7 +72,6 @@ const checkOrderSummaryPageForScoops = () => {
 
   screen.getByText("1 Vanilla");
   screen.getByText("2 Chocolate");
-  screen.getByText("Gummi bears");
 };
 
 const selectTermsAndConfrimOrder = () => {
