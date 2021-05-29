@@ -52,7 +52,8 @@ export function OrderDetailsProvider(props) {
 
       // update option count for this item with the new value
       const optionCountsMap = optionCounts[optionType];
-      optionCountsMap.set(itemName, parseInt(newItemCount));
+      if (parseInt(newItemCount) !== 0) optionCountsMap.set(itemName, parseInt(newItemCount));
+      else optionCountsMap.delete(itemName);
 
       setOptionCounts(newOptionCounts);
     }

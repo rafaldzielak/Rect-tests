@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "../../../test-utils/testing-library-uti
 import { rest } from "msw";
 import { server } from "../../../mocks/server";
 import OrderEntry from "../OrderEntry";
+import userEvent from "@testing-library/user-event";
 
 test("Handles error for scoops and toppings router", async () => {
   server.resetHandlers(
@@ -13,4 +14,17 @@ test("Handles error for scoops and toppings router", async () => {
     const alerts = await screen.findAllByRole("alert");
     expect(alerts).toHaveLength(2);
   });
+});
+
+test("disables order sundae button when no scoop is selected", async () => {
+  render(<OrderEntry />);
+  const orderBtn = screen.getByRole("button", { name: /order sundae/i });
+  expect(orderBtn).toBeDisabled();
+  const vanillaInput = await screen.findByRole("spinbutton", { name: "Vanilla" });
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, "1");
+  expect(orderBtn).toBeEnabled();
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, "0");
+  expect(orderBtn).toBeDisabled();
 });
