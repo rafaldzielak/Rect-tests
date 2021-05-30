@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import { useOrderDetails } from "../../contexts/OrderDetails";
+import AlertBanner from "../common/AlertBanner";
 
 const OrderConfirmation = ({ setOrderPhase }) => {
+  const [error, setError] = useState(null);
   const [, , resetOrder] = useOrderDetails();
   const [orderNumber, setOrderNumber] = useState(null);
   useEffect(() => {
@@ -11,13 +13,16 @@ const OrderConfirmation = ({ setOrderPhase }) => {
       .post("http://localhost:3030/order")
       .then((res) => setOrderNumber(res.data.orderNumber))
       .catch((err) => {
-        // TODO
+        setError("An unespected error occurred. Please try again later");
       });
   }, []);
   const handleClick = () => {
     resetOrder();
     setOrderPhase("in Progress");
   };
+  if (error) {
+    return <AlertBanner message={null} variant={null} />;
+  }
   if (orderNumber) {
     return (
       <div style={{ textAlign: "center" }}>
